@@ -44,7 +44,7 @@ const Home = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 mx-3 gap-3">
         {coffee.map((coffee) => {
           return (
             <div
@@ -59,7 +59,7 @@ const Home = () => {
                 />
                 <div>
                   <h1 className="font-bold text-2xl">{coffee.name}</h1>
-                  <div className="flex gap-2 items-center">
+                  <div className="flex flex-col w-auto md:flex-row gap-2 items-center">
                     <p>Price: {coffee.price}</p>
                     <p>Category: {coffee.category}</p>
                   </div>

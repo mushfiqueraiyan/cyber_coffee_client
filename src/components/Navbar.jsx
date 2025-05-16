@@ -1,8 +1,11 @@
-import { User2Icon } from "lucide-react";
-import React from "react";
+import { Loader, User2Icon } from "lucide-react";
+import React, { use } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../context/AuthProvider";
 
 const Header = () => {
+  const { user, loader } = use(AuthContext);
+
   return (
     <div>
       <div className="navbar bg-base-100 shadow-sm">
@@ -53,14 +56,32 @@ const Header = () => {
 
           <Link to={"/add-coffee"}>Add Coffee</Link>
 
-          <Link to={"/login"}>Login</Link>
-
-          <Link to={"/register"}>Register</Link>
+          {loader ? (
+            <Loader />
+          ) : user ? (
+            ""
+          ) : (
+            <>
+              {" "}
+              <Link to={"/login"}>Login</Link>
+              <Link to={"/register"}>Register</Link>
+            </>
+          )}
         </div>
         <div className="navbar-end">
           <div className="btn btn-ghost btn-circle">
             <div className="indicator">
-              <User2Icon />{" "}
+              {loader ? (
+                <Loader />
+              ) : user ? (
+                <img
+                  src={user.photoURL}
+                  alt=""
+                  className="rounded-full w-full h-fit object-cover"
+                />
+              ) : (
+                <User2Icon />
+              )}
               <span className="badge badge-xs badge-primary indicator-item"></span>
             </div>
           </div>
