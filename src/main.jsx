@@ -11,6 +11,7 @@ import AddCoffee from "./components/AddCoffee.jsx";
 import UpdateCoffee from "./components/UpdateCoffee.jsx";
 import { ToastContainer } from "react-toastify";
 import AuthProvider from "./context/AuthProvider.jsx";
+import RestrictedPage from "./components/RestrictedPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,17 +22,23 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />,
         loader: () =>
-          fetch("http://localhost:3000/coffees").then((res) => res.json()),
+          fetch("https://cyber-coffee-client.vercel.app/coffees").then((res) =>
+            res.json()
+          ),
       },
       {
         path: "/add-coffee",
-        element: <AddCoffee />,
+        element: (
+          <RestrictedPage>
+            <AddCoffee />
+          </RestrictedPage>
+        ),
       },
       {
         path: "/update-coffee/:id",
         element: <UpdateCoffee />,
         loader: ({ params }) =>
-          fetch(`http://localhost:3000/coffees/${params.id}`),
+          fetch(`https://cyber-coffee-client.vercel.app/coffees/${params.id}`),
       },
       {
         path: "/login",

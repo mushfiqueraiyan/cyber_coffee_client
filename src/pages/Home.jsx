@@ -1,11 +1,13 @@
 import { DeleteIcon, Edit2Icon, EditIcon, InfoIcon, Trash } from "lucide-react";
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { data, Link, useLoaderData } from "react-router";
 import Swal from "sweetalert2";
+import { AuthContext } from "../context/AuthProvider";
 
 const Home = () => {
   const coffees = useLoaderData();
   const [coffee, setCoffee] = useState(coffees);
+  const { user } = use(AuthContext);
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -20,7 +22,7 @@ const Home = () => {
       if (result.isConfirmed) {
         // start deleting
 
-        fetch(`http://localhost:3000/coffees/${id}`, {
+        fetch(`https://cyber-coffee-client.vercel.app/coffees/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -67,23 +69,27 @@ const Home = () => {
                   <p>Quantity: {coffee.quantity}</p>
                 </div>
               </div>
-              <div className="flex flex-col gap-2">
-                <Link
-                  to={`/update-coffee/${coffee._id}`}
-                  className="btn rounded-full"
-                >
-                  <EditIcon size={15} />
-                </Link>
-                <Link className="btn rounded-full">
-                  <InfoIcon size={15} />
-                </Link>
-                <button
-                  onClick={() => handleDelete(coffee._id)}
-                  className="btn rounded-full"
-                >
-                  <Trash size={15} />
-                </button>
-              </div>
+              {user ? (
+                <div className="flex flex-col gap-2">
+                  <Link
+                    to={`/update-coffee/${coffee._id}`}
+                    className="btn rounded-full"
+                  >
+                    <EditIcon size={15} />
+                  </Link>
+                  <Link className="btn rounded-full">
+                    <InfoIcon size={15} />
+                  </Link>
+                  <button
+                    onClick={() => handleDelete(coffee._id)}
+                    className="btn rounded-full"
+                  >
+                    <Trash size={15} />
+                  </button>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           );
         })}

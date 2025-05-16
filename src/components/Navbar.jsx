@@ -4,7 +4,15 @@ import { Link } from "react-router";
 import { AuthContext } from "../context/AuthProvider";
 
 const Header = () => {
-  const { user, loader } = use(AuthContext);
+  const { user, loader, logout } = use(AuthContext);
+
+  const handleLogout = () => {
+    logout()
+      .then(() => {})
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div>
@@ -57,7 +65,7 @@ const Header = () => {
           <Link to={"/add-coffee"}>Add Coffee</Link>
 
           {loader ? (
-            <Loader />
+            ""
           ) : user ? (
             ""
           ) : (
@@ -74,11 +82,32 @@ const Header = () => {
               {loader ? (
                 <Loader />
               ) : user ? (
-                <img
-                  src={user.photoURL}
-                  alt=""
-                  className="rounded-full w-full h-fit object-cover"
-                />
+                <div className="dropdown dropdown-end">
+                  <div
+                    tabIndex={0}
+                    role="button"
+                    className="btn btn-ghost btn-circle avatar"
+                  >
+                    <div className="w-10 rounded-full">
+                      <img alt={user.name} src={user.photoURL} />
+                    </div>
+                  </div>
+                  <ul
+                    tabIndex={0}
+                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+                  >
+                    <li>
+                      <a className="justify-between">
+                        Profile
+                        <span className="badge">New</span>
+                      </a>
+                    </li>
+
+                    <li onClick={handleLogout}>
+                      <a>Logout</a>
+                    </li>
+                  </ul>
+                </div>
               ) : (
                 <User2Icon />
               )}

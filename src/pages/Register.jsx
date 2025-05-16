@@ -7,7 +7,7 @@ import auth from "../firebase/firebase.init";
 const Register = () => {
   const { setUser, createWithEmail } = use(AuthContext);
 
-  const handleLogin = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
 
     const form = e.target;
@@ -42,7 +42,7 @@ const Register = () => {
 
         // save profile info in the database
 
-        fetch("http://localhost:3000/users", {
+        fetch("https://cyber-coffee-client.vercel.app/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -68,7 +68,7 @@ const Register = () => {
       <div className="card bg-base-100 w-full max-w-sm mx-auto mt-50 shrink-0 shadow-2xl">
         <h1 className="m-5 font-bold text-2xl">Register</h1>
         <div className="card-body">
-          <form onSubmit={handleLogin} className="fieldset">
+          <form onSubmit={handleRegister} className="fieldset">
             <label className="label">Name</label>
             <input
               name="name"
