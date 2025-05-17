@@ -3,9 +3,12 @@ import { AuthContext } from "../context/AuthProvider";
 import { toast } from "react-toastify";
 import { updateProfile } from "firebase/auth";
 import auth from "../firebase/firebase.init";
+import { Link, useNavigate } from "react-router";
 
 const Register = () => {
   const { setUser, createWithEmail } = use(AuthContext);
+
+  const navigate = useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -57,6 +60,7 @@ const Register = () => {
           });
 
         setUser(res.user);
+        navigate("/add-coffee");
       })
       .catch((err) => {
         console.log(err);
@@ -107,6 +111,12 @@ const Register = () => {
 
             <button className="btn btn-neutral mt-4">Register</button>
           </form>
+          <p>
+            Already have account
+            <Link className="underline text-blue-500 ml-1" to={"/login"}>
+              Login
+            </Link>
+          </p>
         </div>
       </div>
     </div>

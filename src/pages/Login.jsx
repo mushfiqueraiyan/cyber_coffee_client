@@ -1,9 +1,12 @@
 import React, { use } from "react";
 import { AuthContext } from "../context/AuthProvider";
 import { LeafyGreen } from "lucide-react";
+import { Link, useNavigate } from "react-router";
 
 const Login = () => {
   const { loginEmail, setUser } = use(AuthContext);
+
+  const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -17,6 +20,7 @@ const Login = () => {
     loginEmail(email, password)
       .then((res) => {
         setUser(res.user);
+        navigate("/add-coffee");
       })
       .catch((err) => {
         console.log(err);
@@ -45,6 +49,12 @@ const Login = () => {
             />
             <button className="btn btn-neutral mt-4">Login</button>
           </form>
+          <p>
+            Don't have any account{" "}
+            <Link className="underline text-blue-500" to={"/register"}>
+              Register
+            </Link>
+          </p>
         </div>
       </div>
     </div>
